@@ -26,11 +26,11 @@ namespace FileSplitter {
             DigitsInLineCount = MathHelpers.CountDigits(TotalLines);
         }
 
-        public string GenerateFilename(int currentFileCount, int startingLineNumber) {
+        public string GenerateFilename(int currentFileCount = 1, int startingLineNumber = 1) {
             string fileCountDecimalFormat = MathHelpers.GetNumericDecimalFormatString(TotalSplitFiles);
             string lineCountDecimalFormat = MathHelpers.GetNumericDecimalFormatString(TotalLines);
             int endingLineNumber = CalculateEndingLineNumber(startingLineNumber);
-            return $"{FilenameRoot}_{currentFileCount.ToString(fileCountDecimalFormat)}_{startingLineNumber.ToString(lineCountDecimalFormat)}-{endingLineNumber.ToString(lineCountDecimalFormat)}";
+            return $"{FilenameRoot}_{currentFileCount.ToString(fileCountDecimalFormat)}_{startingLineNumber.ToString(lineCountDecimalFormat)}-{endingLineNumber.ToString(lineCountDecimalFormat)}.{Extension}";
         }
 
         private static int CalculateEndingLineNumber(int startingLineNumber) {
