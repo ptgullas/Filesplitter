@@ -30,11 +30,11 @@ namespace FileSplitter {
             string fileCountDecimalFormat = MathHelpers.GetNumericDecimalFormatString(TotalSplitFiles);
             string lineCountDecimalFormat = MathHelpers.GetNumericDecimalFormatString(TotalLines);
             int endingLineNumber = CalculateEndingLineNumber(startingLineNumber);
-            return $"{FilenameRoot}_{currentFileCount.ToString(fileCountDecimalFormat)}_{startingLineNumber.ToString(lineCountDecimalFormat)}-{endingLineNumber.ToString(lineCountDecimalFormat)}.{Extension}";
+            return $"{FilenameRoot}_{currentFileCount.ToString(fileCountDecimalFormat)}_{startingLineNumber.ToString(lineCountDecimalFormat)}-{endingLineNumber.ToString(lineCountDecimalFormat)}{Extension}";
         }
 
         private static int CalculateEndingLineNumber(int startingLineNumber) {
-            int endingLineNumber = startingLineNumber + MaxLinesPerSplitFile;
+            int endingLineNumber = startingLineNumber + MaxLinesPerSplitFile - 1;
             if (endingLineNumber > TotalLines) {
                 endingLineNumber = TotalLines;
             }
