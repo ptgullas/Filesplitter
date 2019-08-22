@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace FileSplitter {
     public static class MathHelpers {
 
-        public static int CountDigits(int number) {
+        public static int CountDigits(long number) {
             if (number == 0) {
                 return 1;
             }
@@ -19,12 +19,12 @@ namespace FileSplitter {
             }
         }
 
-        public static string GetNumericDecimalFormatString(int numberToCountDigits) {
+        public static string GetNumericDecimalFormatString(long numberToCountDigits) {
             int numberOfDigits = CountDigits(numberToCountDigits);
             return $"D{numberOfDigits}";
         }
 
-        public static int CalculateNumberOfFiles(int totalLineCount, int linesPerSplitFile) {
+        public static int CalculateNumberOfFiles(long totalLineCount, int linesPerSplitFile) {
             return (int)Math.Ceiling((double)totalLineCount / linesPerSplitFile);
         }
 
