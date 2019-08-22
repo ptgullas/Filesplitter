@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="MathHelpersTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="FilenameGeneratorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
