@@ -29,11 +29,11 @@ namespace FileSplitter {
         }
 
         static void DisplayIntro() {
-            ColorHelpers.WriteColor("Thanks for running ", ConsoleColor.Yellow);
-            ColorHelpers.WriteColor("FILE", ConsoleColor.White);
+            ColorHelpers.WriteColor("Thanks for running ", ConsoleColor.White);
+            ColorHelpers.WriteColor("FILE", ConsoleColor.Yellow);
             ColorHelpers.WriteColor("//", ConsoleColor.Magenta);
-            ColorHelpers.WriteColor("SPLITTER", ConsoleColor.White);
-            ColorHelpers.WriteLineColor("!", ConsoleColor.Yellow);
+            ColorHelpers.WriteColor("SPLITTER", ConsoleColor.Yellow);
+            ColorHelpers.WriteLineColor("!", ConsoleColor.White);
             ColorHelpers.WriteColor("Copyright \u00a9 2019, ");
             ColorHelpers.WriteLineColor("Paul T. Gullas", ConsoleColor.Cyan);
             ColorHelpers.WriteLineColor("https://github.com/ptgullas/Filesplitter", ConsoleColor.Green);
