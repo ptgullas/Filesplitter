@@ -14,11 +14,18 @@ namespace FileSplitter {
 
         static void Main(string[] args) {
             DisplayIntro();
-            if (args.Length == 0) {
-                DisplayHelpText();
+            try {
+                if (args.Length == 0) {
+                    DisplayHelpText();
+                }
+                else {
+                    ProcessArgs(args);
+                }
             }
-            else {
-                ProcessArgs(args);
+            catch (Exception e) {
+                ColorHelpers.WriteLineColor("Uh-oh, got some errors!", ConsoleColor.Red);
+                ColorHelpers.WriteLineColor($"{e.Message}");
+                ColorHelpers.WriteLineColor($"{e.GetBaseException()}");
             }
             //string testfile = @"c:\temp\500lines.txt";
             //int maxLines = 100;
@@ -32,7 +39,7 @@ namespace FileSplitter {
             ColorHelpers.WriteLineColor("FILESPLITTER!", ConsoleColor.Magenta);
             ColorHelpers.WriteColor("by ");
             ColorHelpers.WriteLineColor("Paul T. Gullas", ConsoleColor.Cyan);
-            ColorHelpers.WriteLineColor("https://github.com/ptgullas/Filesplitter");
+            ColorHelpers.WriteLineColor("https://github.com/ptgullas/Filesplitter", ConsoleColor.Green);
         }
 
         static void DisplayHelpText() {
