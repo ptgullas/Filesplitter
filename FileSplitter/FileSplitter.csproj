@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ColorHelpers.cs" />
     <Compile Include="FilenameGenerator.cs" />
     <Compile Include="MathHelpers.cs" />
     <Compile Include="Program.cs" />
