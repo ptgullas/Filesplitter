@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,12 +13,81 @@ namespace FileSplitter {
         private const char NULL = (char)0;
 
         static void Main(string[] args) {
-            string testfile = @"c:\temp\500lines.txt";
-            int maxLines = 100;
+            DisplayIntro();
+            if (args.Length == 0) {
+                DisplayHelpText();
+            }
+            else {
+                ProcessArgs(args);
+            }
+            //string testfile = @"c:\temp\500lines.txt";
+            //int maxLines = 100;
 
-            Console.WriteLine($"Splitting file {testfile} to {maxLines} lines per file");
-            SplitFile(testfile, maxLines);
+            //Console.WriteLine($"Splitting file {testfile} to {maxLines} lines per file");
+            //SplitFile(testfile, maxLines);
         }
+
+        static void DisplayIntro() {
+            ColorHelpers.WriteColor("Thanks for running ", ConsoleColor.Yellow);
+            ColorHelpers.WriteLineColor("FILESPLITTER!", ConsoleColor.Magenta);
+            ColorHelpers.WriteColor("by ");
+            ColorHelpers.WriteLineColor("Paul T. Gullas", ConsoleColor.Cyan);
+        }
+
+        static void DisplayHelpText() {
+            string applicationName = "FileSplitter";
+            ColorHelpers.WriteLineColor(applicationName, ConsoleColor.Blue);
+            Console.Write("by ");
+            ColorHelpers.WriteColor("\"Prime Time\" ", ConsoleColor.Cyan);
+            ColorHelpers.WriteLineColor("Paul T. Gullas", ConsoleColor.Green);
+            Console.WriteLine("Usage:");
+            ColorHelpers.WriteLineColor($"{applicationName}: ");
+            Console.WriteLine("\tDisplay this help text");
+            ColorHelpers.WriteColor($"{applicationName} ");
+            ColorHelpers.WriteColor($"<path of file to split> ", ConsoleColor.Yellow);
+            ColorHelpers.WriteLineColor($"<# of lines to split by>", ConsoleColor.Magenta);
+        }
+
+        static void ProcessArgs(string[] args) {
+            if (args.Length != 2) {
+                ColorHelpers.WriteLineColor("Need 2 arguments!", ConsoleColor.Red);
+                DisplayHelpText();
+            }
+            else {
+                string filePath = ValidateFilePath(args[0]);
+                int maxLines = ValidateMaxLines(args[1]);
+                SplitFile(filePath, maxLines);
+            }
+        }
+
+        private static string ValidateFilePath(string firstArg) {
+            string filePath = firstArg;
+            if (!File.Exists(filePath)) {
+                string currentFolder = GetCurrentFolder();
+                filePath = Path.Combine(currentFolder, filePath);
+                if (!File.Exists(filePath)) {
+                    throw new FileNotFoundException("Cannot find file", filePath);
+                }
+            }
+            return filePath;
+        }
+        static string GetCurrentFolder() {
+            return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        }
+
+        private static int ValidateMaxLines(string secondArg) {
+            if (!secondArg.IsNumeric()) {
+                throw new ArgumentException("secondArg should be a number!", secondArg);
+            }
+            else {
+                int maxLines = secondArg.ToInt();
+                if (maxLines <= 0) {
+                    throw new ArgumentOutOfRangeException(secondArg, "secondArg should be greater than zero!");
+                }
+                return maxLines;
+            }
+        }
+
 
         static void SplitFile(string pathToFile, int maxLinesPerSplit) {
             // string baseName = current_dir + "\\" + DateTime.Now.ToString("HHmmss") + ".";
