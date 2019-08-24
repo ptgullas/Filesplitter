@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace FileSplitter {
     class Program {
+        // consts used in CountLinesSmarter
         private const char CR = '\r';
         private const char LF = '\n';
         private const char NULL = (char)0;
