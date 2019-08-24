@@ -7,7 +7,16 @@ using System.Threading.Tasks;
 
 namespace FileSplitter {
     class Program {
+        private const char CR = '\r';
+        private const char LF = '\n';
+        private const char NULL = (char)0;
+
         static void Main(string[] args) {
+            string testfile = @"c:\temp\500lines.txt";
+            int maxLines = 100;
+
+            Console.WriteLine($"Splitting file {testfile} to {maxLines} lines per file");
+            SplitFile(testfile, maxLines);
         }
 
         static void SplitFile(string pathToFile, int maxLinesPerSplit) {
@@ -29,14 +38,15 @@ namespace FileSplitter {
                     string line;
                     while ((line = inputfile.ReadLine()) != null) {
 
-                        if (writer == null || count > maxLinesPerSplit) {
+                        if (writer == null || count >= maxLinesPerSplit) {
                             if (writer != null) {
                                 writer.Close();
                                 writer = null;
                             }
 
                             string newFilename = filenameGenerator.GenerateFilename(currentSplitCount, currentOriginalLineCount);
-                            writer = new StreamWriter(newFilename, true);
+                            writer = new StreamWriter(newFilename, false);
+                            Console.WriteLine($"Creating file {newFilename}");
                             currentSplitCount++;
 
                             count = 0;
@@ -54,9 +64,6 @@ namespace FileSplitter {
             }
         }
 
-        private const char CR = '\r';
-        private const char LF = '\n';
-        private const char NULL = (char)0;
 
         // from https://www.nimaara.com/counting-lines-of-a-text-file/
         public static long CountLinesSmarter(Stream stream) {
