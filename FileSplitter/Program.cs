@@ -106,13 +106,12 @@ namespace FileSplitter {
 
 
         static void SplitFile(string pathToFile, int maxLinesPerSplit) {
-            // string baseName = current_dir + "\\" + DateTime.Now.ToString("HHmmss") + ".";
             FileInfo indexFile = new FileInfo(pathToFile);
             long totalLineCount = CountLinesSmarter(indexFile.OpenRead());
             string baseName = Path.GetFileName(pathToFile);
 
             string targetFolder = Path.GetDirectoryName(pathToFile);
-            FilenameGenerator filenameGenerator = new FilenameGenerator(pathToFile, totalLineCount, maxLinesPerSplit);
+            FilenameGenerator filenameGenerator = new FilenameGenerator(pathToFile, totalLineCount, maxLinesPerSplit, targetFolder);
 
             StreamWriter writer = null;
             try {
@@ -124,19 +123,12 @@ namespace FileSplitter {
 
                     while ((line = inputfile.ReadLine()) != null) {
                         if (writer == null || currentSplitLineCount >= maxLinesPerSplit) {
-                            if (currentSplitLineCount >= maxLinesPerSplit) {
-                                writer.Close();
-                                writer = null;
-                            }
-                            string newFilename = filenameGenerator.GenerateFilename(currentSplitFileCount, currentOriginalLineCount);
-                            string newPath = Path.Combine(targetFolder, newFilename);
-                            writer = new StreamWriter(newPath, false);
-                            Console.WriteLine($"Creating file {newPath}");
+                            string newPath = filenameGenerator.GenerateFilenameWithPath(currentSplitFileCount, currentOriginalLineCount);
+                            writer = CreateNewSplitFile(writer, newPath);
 
                             currentSplitFileCount++;
                             currentSplitLineCount = 0;
                         }
-
                         writer.WriteLine(line.ToLower());
                         currentOriginalLineCount++;
                         ++currentSplitLineCount;
@@ -147,6 +139,23 @@ namespace FileSplitter {
                 if (writer != null)
                     writer.Close();
             }
+        }
+
+        private static StreamWriter CreateNewSplitFile(StreamWriter writer, string newPath) {
+            writer = CloseWriterIfAtMaxSplitLines(writer);
+            writer = new StreamWriter(newPath, false);
+            Console.WriteLine($"Creating file {newPath}");
+            return writer;
+        }
+
+        private static StreamWriter CloseWriterIfAtMaxSplitLines(StreamWriter writer) {
+            if (writer != null) {
+                // if we hit the maxLinesPerSplit...
+                writer.Close();
+                writer = null;
+            }
+
+            return writer;
         }
 
 
