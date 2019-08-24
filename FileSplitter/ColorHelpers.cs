@@ -16,7 +16,6 @@ namespace FileSplitter {
 
         public static void WriteLineColor(string str, ConsoleColor fontColor = ConsoleColor.White, ConsoleColor backColor = ConsoleColor.Black) {
             Console.ForegroundColor = fontColor;
-
             Console.BackgroundColor = backColor;
             Console.WriteLine(str);
             Console.ResetColor();
