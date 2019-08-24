@@ -26,18 +26,14 @@ namespace FileSplitter {
                 ColorHelpers.WriteLineColor("Uh-oh, got some errors!", ConsoleColor.Red);
                 ColorHelpers.WriteLineColor($"{e.GetBaseException()}");
             }
-            //string testfile = @"c:\temp\500lines.txt";
-            //int maxLines = 100;
-
-            //Console.WriteLine($"Splitting file {testfile} to {maxLines} lines per file");
-            //SplitFile(testfile, maxLines);
         }
 
         static void DisplayIntro() {
             ColorHelpers.WriteColor("Thanks for running ", ConsoleColor.Yellow);
             ColorHelpers.WriteColor("FILE", ConsoleColor.White);
             ColorHelpers.WriteColor("//", ConsoleColor.Magenta);
-            ColorHelpers.WriteLineColor("SPLITTER!", ConsoleColor.White);
+            ColorHelpers.WriteColor("SPLITTER", ConsoleColor.White);
+            ColorHelpers.WriteLineColor("!", ConsoleColor.Yellow);
             ColorHelpers.WriteColor("Copyright \u00a9 2019, ");
             ColorHelpers.WriteLineColor("Paul T. Gullas", ConsoleColor.Cyan);
             ColorHelpers.WriteLineColor("https://github.com/ptgullas/Filesplitter", ConsoleColor.Green);
@@ -76,12 +72,13 @@ namespace FileSplitter {
             if (maxLines == 1) {
                 lineWord = "line";
             }
-            ColorHelpers.WriteLineColor($" {lineWord}");
+            ColorHelpers.WriteLineColor($"{lineWord}");
         }
 
         private static string ValidateFilePath(string firstArg) {
             string filePath = firstArg;
             if (!File.Exists(filePath)) {
+                Console.WriteLine($"{filePath} not found, checking current folder");
                 string currentFolder = GetCurrentFolder();
                 filePath = Path.Combine(currentFolder, filePath);
                 if (!File.Exists(filePath)) {
@@ -134,8 +131,9 @@ namespace FileSplitter {
                             }
 
                             string newFilename = filenameGenerator.GenerateFilename(currentSplitCount, currentOriginalLineCount);
-                            writer = new StreamWriter(newFilename, false);
-                            Console.WriteLine($"Creating file {newFilename}");
+                            newPath = Path.Combine(targetFolder, newFilename);
+                            writer = new StreamWriter(newPath, false);
+                            Console.WriteLine($"Creating file {newPath}");
                             currentSplitCount++;
 
                             count = 0;
