@@ -36,7 +36,9 @@ namespace FileSplitter {
 
         static void DisplayIntro() {
             ColorHelpers.WriteColor("Thanks for running ", ConsoleColor.Yellow);
-            ColorHelpers.WriteLineColor("FILESPLITTER!", ConsoleColor.Magenta);
+            ColorHelpers.WriteColor("FILE", ConsoleColor.White);
+            ColorHelpers.WriteColor("//", ConsoleColor.Magenta);
+            ColorHelpers.WriteLineColor("SPLITTER!", ConsoleColor.White);
             ColorHelpers.WriteColor("by ");
             ColorHelpers.WriteLineColor("Paul T. Gullas", ConsoleColor.Cyan);
             ColorHelpers.WriteLineColor("https://github.com/ptgullas/Filesplitter", ConsoleColor.Green);
