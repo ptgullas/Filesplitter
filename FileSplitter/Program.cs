@@ -37,16 +37,13 @@ namespace FileSplitter {
 
         static void DisplayHelpText() {
             string applicationName = "FileSplitter";
-            ColorHelpers.WriteLineColor(applicationName, ConsoleColor.Blue);
-            Console.Write("by ");
-            ColorHelpers.WriteColor("\"Prime Time\" ", ConsoleColor.Cyan);
-            ColorHelpers.WriteLineColor("Paul T. Gullas", ConsoleColor.Green);
             Console.WriteLine("Usage:");
             ColorHelpers.WriteLineColor($"{applicationName}: ");
             Console.WriteLine("\tDisplay this help text");
             ColorHelpers.WriteColor($"{applicationName} ");
             ColorHelpers.WriteColor($"<path of file to split> ", ConsoleColor.Yellow);
-            ColorHelpers.WriteLineColor($"<# of lines to split by>", ConsoleColor.Magenta);
+            ColorHelpers.WriteLineColor($"<# of lines to split by>:", ConsoleColor.Magenta);
+            Console.WriteLine("\tSplit file into multiple files containing specified # of lines");
         }
 
         static void ProcessArgs(string[] args) {
@@ -57,8 +54,21 @@ namespace FileSplitter {
             else {
                 string filePath = ValidateFilePath(args[0]);
                 int maxLines = ValidateMaxLines(args[1]);
+                AnnounceSplit(filePath, maxLines);
                 SplitFile(filePath, maxLines);
             }
+        }
+
+        private static void AnnounceSplit(string filePath, int maxLines) {
+            ColorHelpers.WriteColor("Splitting file ");
+            ColorHelpers.WriteColor($"{filePath} ", ConsoleColor.Green);
+            ColorHelpers.WriteColor("by ");
+            ColorHelpers.WriteColor($"{maxLines} ", ConsoleColor.Cyan);
+            string lineWord = "lines";
+            if (maxLines == 1) {
+                lineWord = "line";
+            }
+            ColorHelpers.WriteLineColor($" {lineWord}");
         }
 
         private static string ValidateFilePath(string firstArg) {
