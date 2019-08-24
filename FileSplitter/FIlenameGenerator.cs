@@ -8,6 +8,7 @@ using System.IO;
 namespace FileSplitter {
     public class FilenameGenerator {
 
+        public static string TargetFolder { get; set; }
         public static string FilenameRoot { get; set; }
         public static string Extension { get; set; }
         public static long TotalLines { get; set; }
@@ -16,14 +17,20 @@ namespace FileSplitter {
         public static int DigitsInFileCount { get; set; }
         public static int DigitsInLineCount { get; set; }
 
-        public FilenameGenerator(string path, long totalLines, int linesToSplit) {
+        public FilenameGenerator(string path, long totalLines, int linesToSplit, string targetFolder = null) {
             FilenameRoot = Path.GetFileNameWithoutExtension(path);
+            TargetFolder = targetFolder;
             Extension = Path.GetExtension(path);
             TotalLines = totalLines;
             MaxLinesPerSplitFile = linesToSplit;
             TotalSplitFiles = MathHelpers.CalculateNumberOfFiles(TotalLines, MaxLinesPerSplitFile);
             DigitsInFileCount = MathHelpers.CountDigits(TotalSplitFiles);
             DigitsInLineCount = MathHelpers.CountDigits(TotalLines);
+        }
+        
+        public string GenerateFilenameWithPath(int currentFileCount = 1, int startingLineNumber = 1) {
+            string newFilename = GenerateFilename(currentFileCount, startingLineNumber);
+            return Path.Combine(TargetFolder, newFilename);
         }
 
         public string GenerateFilename(int currentFileCount = 1, int startingLineNumber = 1) {

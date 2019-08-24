@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FileSplitter.Tests {
@@ -20,5 +21,26 @@ namespace FileSplitter.Tests {
             // Assert
             Assert.AreEqual(expected, result);
         }
+
+        [TestMethod]
+        public void GenerateFilenameWithPath_StartingFilename_GeneratesCorrectly() {
+            // Arrange
+            string indexFile = "c:\\temp\\IA_2019_index.txt";
+            int totalLines = 400;
+            int linesPerFile = 50;
+            string expected = @"c:\temp\IA_2019_index_1_001-050.txt";
+
+            string targetFolder = Path.GetDirectoryName(indexFile);
+
+            FilenameGenerator fg = new FilenameGenerator(indexFile, totalLines, linesPerFile, targetFolder);
+
+            // Act
+            string result = fg.GenerateFilenameWithPath();
+
+            // Assert
+            Assert.AreEqual(expected, result);
+        }
+
+
     }
 }
