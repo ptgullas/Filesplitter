@@ -129,7 +129,7 @@ namespace FileSplitter {
                             currentSplitFileCount++;
                             currentSplitLineCount = 0;
                         }
-                        writer.WriteLine(line.ToLower());
+                        writer.WriteLine(line);
                         currentOriginalLineCount++;
                         ++currentSplitLineCount;
                     }
