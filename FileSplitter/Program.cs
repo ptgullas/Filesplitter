@@ -113,35 +113,33 @@ namespace FileSplitter {
 
             string targetFolder = Path.GetDirectoryName(pathToFile);
             FilenameGenerator filenameGenerator = new FilenameGenerator(pathToFile, totalLineCount, maxLinesPerSplit);
-            string newPath = Path.Combine(targetFolder, filenameGenerator.GenerateFilename());
 
             StreamWriter writer = null;
             try {
-                using (StreamReader inputfile = new System.IO.StreamReader(pathToFile)) {
-                    int count = 0;
-                    int currentSplitCount = 1;
+                using (StreamReader inputfile = new StreamReader(pathToFile)) {
+                    int currentSplitLineCount = 0;
+                    int currentSplitFileCount = 1;
                     int currentOriginalLineCount = 1;
                     string line;
-                    while ((line = inputfile.ReadLine()) != null) {
 
-                        if (writer == null || count >= maxLinesPerSplit) {
-                            if (writer != null) {
+                    while ((line = inputfile.ReadLine()) != null) {
+                        if (writer == null || currentSplitLineCount >= maxLinesPerSplit) {
+                            if (currentSplitLineCount >= maxLinesPerSplit) {
                                 writer.Close();
                                 writer = null;
                             }
-
-                            string newFilename = filenameGenerator.GenerateFilename(currentSplitCount, currentOriginalLineCount);
-                            newPath = Path.Combine(targetFolder, newFilename);
+                            string newFilename = filenameGenerator.GenerateFilename(currentSplitFileCount, currentOriginalLineCount);
+                            string newPath = Path.Combine(targetFolder, newFilename);
                             writer = new StreamWriter(newPath, false);
                             Console.WriteLine($"Creating file {newPath}");
-                            currentSplitCount++;
 
-                            count = 0;
+                            currentSplitFileCount++;
+                            currentSplitLineCount = 0;
                         }
 
                         writer.WriteLine(line.ToLower());
                         currentOriginalLineCount++;
-                        ++count;
+                        ++currentSplitLineCount;
                     }
                 }
             }
