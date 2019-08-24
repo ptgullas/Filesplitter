@@ -24,7 +24,6 @@ namespace FileSplitter {
             }
             catch (Exception e) {
                 ColorHelpers.WriteLineColor("Uh-oh, got some errors!", ConsoleColor.Red);
-                ColorHelpers.WriteLineColor($"{e.Message}");
                 ColorHelpers.WriteLineColor($"{e.GetBaseException()}");
             }
             //string testfile = @"c:\temp\500lines.txt";
@@ -39,7 +38,7 @@ namespace FileSplitter {
             ColorHelpers.WriteColor("FILE", ConsoleColor.White);
             ColorHelpers.WriteColor("//", ConsoleColor.Magenta);
             ColorHelpers.WriteLineColor("SPLITTER!", ConsoleColor.White);
-            ColorHelpers.WriteColor("by ");
+            ColorHelpers.WriteColor("Copyright \u00a9 2019, ");
             ColorHelpers.WriteLineColor("Paul T. Gullas", ConsoleColor.Cyan);
             ColorHelpers.WriteLineColor("https://github.com/ptgullas/Filesplitter", ConsoleColor.Green);
         }
@@ -102,7 +101,7 @@ namespace FileSplitter {
             else {
                 int maxLines = secondArg.ToInt();
                 if (maxLines <= 0) {
-                    throw new ArgumentOutOfRangeException(secondArg, "secondArg should be greater than zero!");
+                    throw new ArgumentOutOfRangeException(nameof(secondArg), "secondArg should be greater than zero!");
                 }
                 return maxLines;
             }
