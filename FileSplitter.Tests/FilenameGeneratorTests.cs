@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using FileSplitter.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FileSplitter.Tests {

@@ -58,6 +58,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FileSplitter.Services\FileSplitter.Services.csproj">
+      <Project>{76C24ED3-84A2-466C-AEC3-3399B8616EE5}</Project>
+      <Name>FileSplitter.Services</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FileSplitter\FileSplitter.csproj">
       <Project>{e14dd09e-e2a3-4b0f-8ddb-a9d84907b485}</Project>
       <Name>FileSplitter</Name>

@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FileSplitter;
+using FileSplitter.Services;
 
 namespace FileSplitter.Tests {
     [TestClass]

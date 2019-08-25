@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace FileSplitter {
+namespace FileSplitter.Services {
     public class FilenameGenerator {
 
         public static string TargetFolder { get; set; }

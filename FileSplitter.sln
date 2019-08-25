@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileSplitter", "FileSplitte
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileSplitter.Tests", "FileSplitter.Tests\FileSplitter.Tests.csproj", "{BA00872B-B772-448C-AFDA-82099D1DCDE1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileSplitter.Services", "FileSplitter.Services\FileSplitter.Services.csproj", "{76C24ED3-84A2-466C-AEC3-3399B8616EE5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{BA00872B-B772-448C-AFDA-82099D1DCDE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA00872B-B772-448C-AFDA-82099D1DCDE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA00872B-B772-448C-AFDA-82099D1DCDE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76C24ED3-84A2-466C-AEC3-3399B8616EE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76C24ED3-84A2-466C-AEC3-3399B8616EE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76C24ED3-84A2-466C-AEC3-3399B8616EE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76C24ED3-84A2-466C-AEC3-3399B8616EE5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FileSplitter {
+namespace FileSplitter.Services {
     public static class MathHelpers {
 
         public static int CountDigits(long number) {
