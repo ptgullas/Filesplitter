@@ -37,7 +37,7 @@ namespace FileSplitter {
             ColorHelpers.WriteLineColor("!", ConsoleColor.White);
             ColorHelpers.WriteColor("Copyright \u00a9 2019, ");
             ColorHelpers.WriteLineColor("Paul T. Gullas", ConsoleColor.Cyan);
-            ColorHelpers.WriteLineColor("https://github.com/ptgullas/Filesplitter", ConsoleColor.Green);
+            ColorHelpers.WriteLineColor("https://github.com/ptgullas/Filesplitter", ConsoleColor.Magenta);
         }
 
         static void DisplayHelpText() {
@@ -49,6 +49,10 @@ namespace FileSplitter {
             ColorHelpers.WriteColor($"<path of file to split> ", ConsoleColor.Yellow);
             ColorHelpers.WriteLineColor($"<# of lines to split by>:", ConsoleColor.Magenta);
             Console.WriteLine("\tSplit file into multiple files containing specified # of lines");
+            ColorHelpers.WriteColor($"{applicationName} ");
+            ColorHelpers.WriteColor($"<wildcard pattern> ", ConsoleColor.Yellow);
+            ColorHelpers.WriteLineColor($"<# of lines to split by>:", ConsoleColor.Magenta);
+            Console.WriteLine("\tSupports wildcards (e.g., *index.txt)");
         }
 
         static void ProcessArgs(string[] args) {
@@ -57,11 +61,42 @@ namespace FileSplitter {
                 DisplayHelpText();
             }
             else {
-                string filePath = ValidateFilePath(args[0]);
                 int maxLines = ValidateMaxLines(args[1]);
-                AnnounceSplit(filePath, maxLines);
-                SplitFile(filePath, maxLines);
+                if (args[0].ContainsWildcard()) {
+                    string wildcardPattern = args[0];
+                    SplitMultipleFiles(wildcardPattern, maxLines);
+                }
+                else {
+                    SplitSingleFile(args[0], maxLines);
+                }
             }
+        }
+
+        private static void SplitMultipleFiles(string wildcardPattern, int maxLines) {
+            string currentFolder = GetCurrentFolder();
+            List<string> files = Directory.GetFiles(currentFolder, wildcardPattern, SearchOption.TopDirectoryOnly).ToList();
+            if (files.Count != 0) {
+                ListMultipleFiles(files);
+                foreach (string file in files) {
+                    SplitSingleFile(file, maxLines);
+                }
+            }
+            else {
+                ColorHelpers.WriteLineColor("No files found!", ConsoleColor.Red);
+            }
+        }
+
+        private static void ListMultipleFiles(List<string> files) {
+            foreach (string file in files) {
+                ColorHelpers.WriteColor("Found ");
+                ColorHelpers.WriteLineColor($"{file}", ConsoleColor.Green);
+            }
+        }
+
+        private static void SplitSingleFile(string filePathToValidate, int maxLines) {
+            string filePath = ValidateFilePath(filePathToValidate);
+            AnnounceSplit(filePath, maxLines);
+            SplitFile(filePath, maxLines);
         }
 
         private static void AnnounceSplit(string filePath, int maxLines) {
@@ -112,6 +147,12 @@ namespace FileSplitter {
             string baseName = Path.GetFileName(pathToFile);
 
             string targetFolder = Path.GetDirectoryName(pathToFile);
+
+            // if I ever need to have a different type of filenameGenerator pattern that isn't
+            // <original>_<filecount>_<startLine>-<endLine>.txt
+            // I'll have to set this up to inject this
+            // I'll also want to set up SplitFile in its own class
+            // and set up an IFilenameGenerator interface
             FilenameGenerator filenameGenerator = new FilenameGenerator(pathToFile, totalLineCount, maxLinesPerSplit, targetFolder);
 
             StreamWriter writer = null;
